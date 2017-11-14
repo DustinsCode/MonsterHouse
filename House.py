@@ -7,6 +7,7 @@ class House(Observer, Obervable):
 """
 A house object
 """
+    #TODO: find a better way to randomly fill with monsters
     def __init__(self, monsters, game):
         super().register(game)
         self.population = random.randint(0,10)
@@ -14,7 +15,6 @@ A house object
         self.people = []
         for i in range(self.population):
             monsterIndex = random.randint(0,len(monsters)-1)
-            personChance = random.randint(1,10)
             self.monsters.append(monsters[monsterIndex])
 
     def update(self, *args):
