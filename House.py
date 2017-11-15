@@ -15,8 +15,8 @@ A house object
 		self.people = []
 		for i in range(self.population):
 			monsterList = [Zombie(), Werewolf(), Vampire(), Ghoul()]
-			monsterIndex = random.randint(0,len(monsters)-1)
-			self.monsters.append(monsters[monsterIndex])
+			monsterIndex = random.randint(0,len(monsterList)-1)
+			self.monsters.append(monsterList[monsterIndex])
 
 	def update(self, *args):
 		for monster in args:
