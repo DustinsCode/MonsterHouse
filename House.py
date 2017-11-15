@@ -1,14 +1,14 @@
 from Monster import *
-from Oberver import Observer
+from Observer import Observer
 from Observable import Observable
 
 
-class House(Observer, Obervable):
-"""
-A house object
-"""
+class House(Observer, Observable):
+	"""
+	A house object
+	"""
     #TODO: find a better way to randomly fill with monsters
-	def __init__(self, monsters, game):
+	def __init__(self, game):
 		super().register(game)
 		self.population = random.randint(0,10)
 		self.monsters = []
@@ -22,7 +22,7 @@ A house object
 		for monster in args:
 			self.monsters.remove(monster)
 			self.people.append(Person())
-		update_observer(len(args))
+		super().update_observer(len(args))
 
 	def getMonsters(self):
 		return self.monsters
