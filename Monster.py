@@ -7,27 +7,32 @@ class Monster(Observable):
 		super().register(house)
 
 
-class Person():
+class Person(Monster):
 
 	def __init__(self):
-	self.type = "Person"
+		super().__init__()
+		self.type = "Person"
 
-class Zombie():
-
-	def __init__(self):
-	self.type = "Zombie"
-
-class Vampire():
-
-	def __ init__(self):
-	self.type = "Vampire"
-
-class Ghoul():
+class Zombie(Monster):
 
 	def __init__(self):
-	self.type = "Ghoul"
+		super().__init__()
+		self.type = "Zombie"
 
-class Werewolf():
+class Vampire(Monster):
 
 	def __init__(self):
-	self.type = "Werewolf"
+		super().__init__()
+		self.type = "Vampire"
+
+class Ghoul(Monster):
+
+	def __init__(self):
+		super().__init__()
+		self.type = "Ghoul"
+
+class Werewolf(Monster):
+
+	def __init__(self):
+		super().__init__()
+		self.type = "Werewolf"
