@@ -9,7 +9,7 @@ from Observer import observer
 
 class Game(Observer):
 
-    def main(self):
+	def main(self):
 
 		hood = Neighborhood()
 		p = Player()
@@ -17,7 +17,7 @@ class Game(Observer):
 		message("Welcome to the spooky neighborhood.")
 		message("Please save your friends, they're all monsters now.\n\n")
 
-		while(True):
+		#while(True):
 
 
 	def message(m):
