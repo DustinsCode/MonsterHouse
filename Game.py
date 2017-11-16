@@ -15,7 +15,8 @@ class Game(Observer):
 		p = Player()
 
 		Game.message("Welcome to the spooky neighborhood.")
-		Game.message("Please save your friends, they're all monsters now.\n\n")
+		Game.message("Please save your friends, they're all monsters now.")
+		Game.message(len(hood.houseArray))
 
 		#while(True):
 

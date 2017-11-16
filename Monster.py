@@ -29,7 +29,7 @@ class Person(Monster):
 class Zombie(Monster):
 
 	def __init__(self):
-		super().__init__()
+		#super().__init__()
 		self.type = "Zombie"
 		self.health = random.randint(50,100)
 
@@ -37,21 +37,21 @@ class Zombie(Monster):
 		return random.randint(0,5)
 
 
+
 class Vampire(Monster):
 
 	def __init__(self):
-		super().__init__()
+		#super().__init__()
 		self.type = "Vampire"
 		self.health = random.randint(100,200)
 
 	def attack(self):
 		return random.randint(1,6)
 
-
 class Ghoul(Monster):
 
 	def __init__(self):
-		super().__init__()
+		#super().__init__()
 		self.type = "Ghoul"
 		self.health = random.randint(40,80)
 
@@ -61,7 +61,7 @@ class Ghoul(Monster):
 class Werewolf(Monster):
 
 	def __init__(self):
-		super().__init__()
+		#super().__init__()
 		self.type = "Werewolf"
 		self.health = 200
 

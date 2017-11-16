@@ -1,5 +1,5 @@
 from Monster import *
-from Observer import Observer
+from Observer import *
 from Observable import Observable
 
 
@@ -9,6 +9,7 @@ class House(Observer, Observable):
 	"""
     #TODO: find a better way to randomly fill with monsters
 	def __init__(self, game):
+		super().__init__()
 		super().register(game)
 		self.population = random.randint(0,10)
 		self.monsters = []
@@ -19,6 +20,9 @@ class House(Observer, Observable):
 			self.monsters.append(monsterList[monsterIndex])
 
 	def update(self, *args):
+		"""
+		updates the observer and is updated by monsters
+		"""
 		for monster in args:
 			self.monsters.remove(monster)
 			self.people.append(Person())
