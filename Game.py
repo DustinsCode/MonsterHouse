@@ -9,20 +9,19 @@ from Observer import Observer
 
 class Game(Observer):
 
+	def __init__(self):
+		self.message = ""
+		self.hood = Neighborhood(self)
+		self.p = Player()
+
 	def main(self):
 
-		hood = Neighborhood(self)
-		p = Player()
-
-		Game.message("Welcome to the spooky neighborhood.")
+		Game.printMessage("Welcome to the spooky neighborhood.")
 		Game.message("Please save your friends, they're all monsters now.")
-		Game.message(len(hood.houseArray))
-
-		#while(True):
 
 
-	def message(m):
-		print(m,'\n')
+	def printMessage():
+		print()
 
 g = Game()
 g.main()
