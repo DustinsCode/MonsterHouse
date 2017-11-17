@@ -13,17 +13,27 @@ class Game(Observer):
 		self.message = ""
 		self.hood = Neighborhood(self)
 		self.p = Player()
+		self.win = False
 
 	def main(self):
 		self.message = ("\nWelcome to the spooky neighborhood.\n"
 						"All of your friends have turned to monsters!\n"
 						"Please help them!\n")
 		self.printMessage()
-		self.getWeapons()
+
+		while(self.win == False):
+			command = ''
+			while(command == ''):
+				command = input('> ')
+				command = command.strip()
+			self.parseCommand(command)
 
 
 	def printMessage(self):
 		print(self.message)
+
+	def parseCommand(self,command):
+		pass
 
 	def getWeapons(self):
 		weapons = self.p.getWeapons()
