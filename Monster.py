@@ -29,7 +29,7 @@ class Person(Monster):
 class Zombie(Monster):
 
 	def __init__(self):
-		#super().__init__()
+		super().__init__()
 		self.type = "Zombie"
 		self.health = random.randint(50,100)
 

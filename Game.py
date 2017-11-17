@@ -15,13 +15,15 @@ class Game(Observer):
 		self.p = Player()
 
 	def main(self):
+		self.message = ("\nWelcome to the spooky neighborhood.\n"
+						"All of your friends have turned to monsters!\n"
+						"Please help them!\n")
+		self.printMessage()
 
-		Game.printMessage("Welcome to the spooky neighborhood.")
-		Game.message("Please save your friends, they're all monsters now.")
+		
 
-
-	def printMessage():
-		print()
+	def printMessage(self):
+		print(self.message)
 
 g = Game()
 g.main()
