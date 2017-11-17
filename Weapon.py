@@ -9,6 +9,9 @@ class Weapon():
 		self.attMod = 1
 		self.useCount = 0
 
+	def getAttMod():
+		return self.attMod
+
 
 class HersheyKiss(Weapon):
 
@@ -23,9 +26,8 @@ class SourStraw(Weapon):
 	def __init__(self):
 		super().__init__()
 		self.type = 'Sour Straw'
-		self.attMod = random.randint(0,25)
-		self.attMod = str('1.' + self.attMod)
-		self.attMod = float(self.attMod)
+		self.useCount = 2
+		self.attMod = random.randint(100,175) / 100
 
 class ChocolateBar(Weapon):
 
@@ -33,9 +35,7 @@ class ChocolateBar(Weapon):
 		super().__init__()
 		self.type = 'Chocolate Bar'
 		self.useCount = 4
-		self.attMod = random.randint(0,40)
-		self.attMod = str('2.' + self.attMod)
-		self.attMod = float(self.attMod)
+		self.attMod = random.randint(100,140) / 100
 
 class NerdBomb(Weapon):
 
@@ -43,9 +43,4 @@ class NerdBomb(Weapon):
 		super().__init__()
 		self.type = 'Nerd Bomb'
 		self.useCount = 1
-		val1 = random.randint(3,5)
-		val2 = random.randint(0,99)
-		if val1 is 3 and val2 < 50:
-			self.attMod = 3.5
-		elif val1 is 5 and val2 > 0:
-			self.attMod = 5.0
+		val1 = random.randint(350,500)/100
