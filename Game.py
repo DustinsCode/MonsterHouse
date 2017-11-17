@@ -34,11 +34,12 @@ class Game(Observer):
 
 		for w in weapons:
 			wtype = w.getType()
-			if wtype is 'Nerd Bomb':
+			#print(wtype)
+			if wtype == 'Nerd Bomb':
 				nerdCount += 1
-			elif wtype is 'Chocolate Bar':
+			elif wtype == 'Chocolate Bar':
 				barCount += 1
-			elif wtype is 'Sour Straw':
+			elif wtype == 'Sour Straw':
 				strawCount += 1
 
 		self.message = self.message + 'Sour Straw x' + str(strawCount) + '\n'
