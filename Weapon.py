@@ -6,12 +6,15 @@ class Weapon():
 	"""
 
 	def __init__(self):
+		self.type = ''
 		self.attMod = 1
 		self.useCount = 0
 
-	def getAttMod():
+	def getAttMod(self):
 		return self.attMod
 
+	def getType(self):
+		return self.type
 
 class HersheyKiss(Weapon):
 

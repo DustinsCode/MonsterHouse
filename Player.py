@@ -15,5 +15,8 @@ class Player():
 	def attack(Weapon):
 		return self.attVal * Weapon.getAttMod()
 
-	def getHp():
+	def getHp(self):
 		return hp
+
+	def getWeapons(self):
+		return self.weapons
