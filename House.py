@@ -7,7 +7,6 @@ class House(Observer, Observable):
 	"""
 	A house object
 	"""
-    #TODO: find a better way to randomly fill with monsters
 	def __init__(self, game):
 		super().__init__()
 		super().register(game)
@@ -15,7 +14,7 @@ class House(Observer, Observable):
 		self.monsters = []
 		self.people = []
 		for i in range(self.population):
-			monsterList = [Zombie(), Werewolf(), Vampire(), Ghoul()]
+			monsterList = [Zombie(self), Werewolf(self), Vampire(self), Ghoul(self)]
 			monsterIndex = random.randint(0,len(monsterList)-1)
 			self.monsters.append(monsterList[monsterIndex])
 

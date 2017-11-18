@@ -1,4 +1,5 @@
 from Observable import Observable
+from House import *
 from Weapon import *
 import random
 
@@ -12,6 +13,7 @@ class Monster(Observable):
 		"""
 		Default constructor.
 		"""
+		super().__init__()
 		super().register(House)
 		self.type = ''
 		self.attack = 0
@@ -41,8 +43,8 @@ class Zombie(Monster):
 	Health between 50 and 100.  Attacks between 0 and 5.
 	"""
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, House):
+		super().__init__(House)
 		self.type = "Zombie"
 		self.health = random.randint(50,100)
 
@@ -56,7 +58,7 @@ class Vampire(Monster):
 	Health between 100 and 200. Attacks between 1 and 6.
 	"""
 
-	def __init__(self):
+	def __init__(self, House):
 		#super().__init__()
 		self.type = "Vampire"
 		self.health = random.randint(100,200)
@@ -69,7 +71,7 @@ class Ghoul(Monster):
 	Health between 40 and 80.  Attacks between 5 and 10.
 	"""
 
-	def __init__(self):
+	def __init__(self, House):
 		#super().__init__()
 		self.type = "Ghoul"
 		self.health = random.randint(40,80)
@@ -82,7 +84,7 @@ class Werewolf(Monster):
 	Health of 200.  Attacks between 10 and 20.
 	"""
 
-	def __init__(self):
+	def __init__(self, House):
 		#super().__init__()
 		self.type = "Werewolf"
 		self.health = 200
