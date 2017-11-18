@@ -6,17 +6,29 @@ class Weapon():
 	"""
 
 	def __init__(self):
+		"""
+		Default constructor.
+		"""
 		self.type = ''
 		self.attMod = 1
 		self.useCount = 0
 
 	def getAttMod(self):
+		"""
+		Return's the weapon's attack modifier.
+		"""
 		return self.attMod
 
 	def getType(self):
+		"""
+		Returns the weapon's type.
+		"""
 		return self.type
 
 class HersheyKiss(Weapon):
+	"""
+	Basic attack. Player has unlimited attacks with these.
+	"""
 
 	def __init__(self):
 		super().__init__()
@@ -25,7 +37,9 @@ class HersheyKiss(Weapon):
 		self.attMod = 1
 
 class SourStraw(Weapon):
-
+	"""
+	Attack mod of 1-1.75.  Can be used twice.
+	"""
 	def __init__(self):
 		super().__init__()
 		self.type = 'Sour Straw'
@@ -33,6 +47,9 @@ class SourStraw(Weapon):
 		self.attMod = random.randint(100,175) / 100
 
 class ChocolateBar(Weapon):
+	"""
+	Attack Mod of 1-1.4.  Can be used 4 times.
+	"""
 
 	def __init__(self):
 		super().__init__()
@@ -41,6 +58,9 @@ class ChocolateBar(Weapon):
 		self.attMod = random.randint(100,140) / 100
 
 class NerdBomb(Weapon):
+	"""
+	Attack Mod of 3.5-5.0.  Can only be used 1 time.
+	"""
 
 	def __init__(self):
 		super().__init__()

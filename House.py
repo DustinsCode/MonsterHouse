@@ -29,4 +29,7 @@ class House(Observer, Observable):
 		super().update_observer(len(args))
 
 	def getMonsters(self):
+		"""
+		Returns list of monsters in the house.
+		"""
 		return self.monsters

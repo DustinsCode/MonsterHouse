@@ -1,6 +1,9 @@
 from House import House
 
 class Neighborhood():
+	"""
+	A 2d array representing the game's map.
+	"""
 
 	def __init__(self, game):
 		x, y = 3, 3

@@ -4,9 +4,15 @@ import random
 
 
 class Monster(Observable):
-
-	def __init__(self, house):
-		super().register(house)
+	"""
+	Monsters that have infested the world.
+	Player must turn them into Persons again.
+	"""
+	def __init__(self, House):
+		"""
+		Default constructor.
+		"""
+		super().register(House)
 		self.type = ''
 		self.attack = 0
 		self.health = 0
@@ -16,6 +22,10 @@ class Monster(Observable):
 
 
 class Person(Monster):
+	"""
+	Monster turns into this once their health is dropped to 0.
+	Gives player health through the power of freindship.
+	"""
 
 	def __init__(self):
 		super().__init__()
@@ -27,9 +37,12 @@ class Person(Monster):
 		return self.attack
 
 class Zombie(Monster):
+	"""
+	Health between 50 and 100.  Attacks between 0 and 5.
+	"""
 
 	def __init__(self):
-		#super().__init__()
+		super().__init__()
 		self.type = "Zombie"
 		self.health = random.randint(50,100)
 
@@ -39,6 +52,9 @@ class Zombie(Monster):
 
 
 class Vampire(Monster):
+	"""
+	Health between 100 and 200. Attacks between 1 and 6.
+	"""
 
 	def __init__(self):
 		#super().__init__()
@@ -49,6 +65,9 @@ class Vampire(Monster):
 		return random.randint(1,6)
 
 class Ghoul(Monster):
+	"""
+	Health between 40 and 80.  Attacks between 5 and 10.
+	"""
 
 	def __init__(self):
 		#super().__init__()
@@ -59,6 +78,9 @@ class Ghoul(Monster):
 		return random.randint(5,10)
 
 class Werewolf(Monster):
+	"""
+	Health of 200.  Attacks between 10 and 20.
+	"""
 
 	def __init__(self):
 		#super().__init__()

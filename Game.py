@@ -8,6 +8,10 @@ from Neighborhood import Neighborhood
 from Observer import Observer
 
 class Game(Observer):
+	"""
+	The Main class that runs and tracks the progress
+	of the game.
+	"""
 
 	def __init__(self):
 		self.message = ""
@@ -16,6 +20,10 @@ class Game(Observer):
 		self.win = False
 
 	def main(self):
+		"""
+		Sets the initial welcome message and waits for user commands
+		until the game winning conditions are met.
+		"""
 		self.message = ("\nWelcome to the spooky neighborhood.\n"
 						"All of your friends have turned to monsters!\n"
 						"Please help them!\n")
@@ -30,12 +38,18 @@ class Game(Observer):
 
 
 	def printMessage(self):
+		"""
+		Prints the game's current message.
+		"""
 		print(self.message)
 
 	def parseCommand(self,command):
 		pass
 
 	def getWeapons(self):
+		"""
+		Prints out a list of Player's current weapons.
+		"""
 		weapons = self.p.getWeapons()
 		self.message = 'HersheyKiss xinfinity\n'
 		nerdCount = 0
