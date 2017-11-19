@@ -34,7 +34,8 @@ class Game(Observer):
 			while(command == ''):
 				command = input('> ')
 				command = command.strip()
-			self.parseCommand(command)
+			if self.parseCommand(command) == "exit":
+				return
 
 
 	def printMessage(self):
@@ -44,7 +45,11 @@ class Game(Observer):
 		print(self.message)
 
 	def parseCommand(self,command):
-		pass
+		if(command == "inv" or command == "inventory"):
+			self.getWeapons()
+		elif (command == "exit" or command == "quit"):
+			return "exit"
+
 
 	def getWeapons(self):
 		"""
