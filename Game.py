@@ -18,6 +18,8 @@ class Game(Observer):
 		self.hood = Neighborhood(self)
 		self.p = Player()
 		self.win = False
+		self.commands = ["exit", "attack <weapon>", "move <north, easy, south, or west>", "inventory", "help"]
+
 
 	def main(self):
 		"""
@@ -34,6 +36,7 @@ class Game(Observer):
 			while(command == ''):
 				command = input('> ')
 				command = command.strip()
+				command = command.lower()
 			if self.parseCommand(command) == "exit":
 				return
 
@@ -49,7 +52,16 @@ class Game(Observer):
 			self.getWeapons()
 		elif (command == "exit" or command == "quit"):
 			return "exit"
+		elif(command == "help"):
+			self.help()
 
+	def help(self):
+		temp = self.message
+		self.message = "Here's a list of commands: \n"
+		for s in self.commands:
+			self.message += s + '\n'
+		self.printMessage()
+		self.message = temp
 
 	def getWeapons(self):
 		"""

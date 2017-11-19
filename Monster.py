@@ -16,11 +16,23 @@ class Monster(Observable):
 		super().__init__()
 		super().register(House)
 		self.type = ''
-		self.attack = 0
-		self.health = 0
+		self.health = 1
 
 	def getType(self):
+		"""
+		returns monster's type
+		"""
 		return self.type
+
+	def getHealth():
+		"""
+		returns monster's Health and checks if ded
+		"""
+		if self.health <= 0:
+			super().update_observer()
+			self.heatlh = 0
+		return self.Health
+
 
 
 class Person(Monster):
@@ -32,11 +44,13 @@ class Person(Monster):
 	def __init__(self):
 		super().__init__()
 		self.type = "Person"
-		self.attack = -1
 		self.health = 100
 
 	def attack(self):
-		return self.attack
+		return -1
+
+	def attacked(self):
+		return
 
 class Zombie(Monster):
 	"""
@@ -51,7 +65,13 @@ class Zombie(Monster):
 	def attack(self):
 		return random.randint(0,5)
 
+	def attacked(self, dmg, weapon):
+		if(weapon.getType() == "Sour Straw"):
+			self.health -= dmg*2
+		else:
+			self.health -= dmg
 
+		self.getHealth()
 
 class Vampire(Monster):
 	"""
@@ -66,6 +86,14 @@ class Vampire(Monster):
 	def attack(self):
 		return random.randint(1,6)
 
+	def attacked(self, dmg, weapon):
+		if weapon.getType() == "Chocolate Bar":
+			pass
+		else:
+			self.health -= dmg
+		self.getHealth()
+
+
 class Ghoul(Monster):
 	"""
 	Health between 40 and 80.  Attacks between 5 and 10.
@@ -79,6 +107,13 @@ class Ghoul(Monster):
 	def attack(self):
 		return random.randint(5,10)
 
+	def attacked(self, dmg, weapon):
+		if weapon.getType() == "Nerd Bomb":
+			self.health -= dmg*5
+		else:
+			self.health -= dmg
+		self.getHealth()
+
 class Werewolf(Monster):
 	"""
 	Health of 200.  Attacks between 10 and 20.
@@ -91,3 +126,11 @@ class Werewolf(Monster):
 
 	def attack(self):
 		return random.randint(10,20)
+
+	def attacked(self, dmg, weapon):
+		if weapon.getType() == "Chocolate Bar" or weapon.getType() == "Sour Straw":
+			self.getHealth
+		else:
+			self.health -= dmg
+
+		self.getHealth()
