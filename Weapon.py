@@ -25,6 +25,18 @@ class Weapon():
 		"""
 		return self.type
 
+	def getUseCount(self):
+		"""
+		Returns the number of times an item can be used.
+		"""
+		return self.useCount
+
+	def use(self):
+		"""
+		Decrements the use count of the weapon.
+		"""
+		self.useCount -= 1
+
 class HersheyKiss(Weapon):
 	"""
 	Basic attack. Player has unlimited attacks with these.

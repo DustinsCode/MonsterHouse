@@ -11,14 +11,23 @@ class Game(Observer):
 	"""
 	The Main class that runs and tracks the progress
 	of the game.
+
+	Note:	I edited some of the provided values to balance the Game
+			and make it winnable.
+
+	@author Dustin Thurston
 	"""
 
 	def __init__(self):
 		self.message = ""
 		self.hood = Neighborhood(self)
+		self.x = 1
+		self.y = 1
+		self.currHouse = self.hood.houseArray[self.x][self.y]
+		self.currHouse.playerMove()
 		self.p = Player()
 		self.win = False
-		self.commands = ["exit", "attack <weapon>", "move <north, easy, south, or west>", "inventory", "help"]
+		self.commands = ["exit", "attack <weapon>", "move <north, easy, south, or west>", "inventory", "help", "look"]
 
 
 	def main(self):
@@ -30,6 +39,8 @@ class Game(Observer):
 						"All of your friends have turned to monsters!\n"
 						"Please help them!\n")
 		self.printMessage()
+		self.look()
+
 
 		while(self.win == False):
 			command = ''
@@ -48,14 +59,78 @@ class Game(Observer):
 		print(self.message)
 
 	def parseCommand(self,command):
+		"""
+		Takes in a command given by the user and
+		acts accordingly
+		"""
 		if(command == "inv" or command == "inventory"):
 			self.getWeapons()
-		elif (command == "exit" or command == "quit"):
+		elif(command == "exit" or command == "quit"):
 			return "exit"
 		elif(command == "help"):
 			self.help()
+		elif(command == "look"):
+			self.look()
+		elif("attack" in command):
+			self.attack(command)
+		else:
+			self.message = "That is not a command."
+			self.printMessage()
+
+	def attack(self, command):
+		cmdList = command.split(' ')
+		if len(cmdList) > 3:
+			self.message = "You must attack with one weapon at a time."
+			self.printMessage()
+		else:
+			weapon = ''
+			for x in cmdList[1:]:
+				#Finds the weapon to be used
+				weapon += x.lower()
+			for y in self.p.getWeapons():
+				if(weapon in y.getType().lower().strip()):
+					weapon = y
+					break
+				weapon = ''
+
+			if weapon == '':
+				#if the weapon entered was invalid
+				self.message = "That is not a weapon you possess."
+				self.printMessage()
+				return
+
+			for monster in self.currHouse.getMonsters():
+				#Attacks each monster in the house
+				dmg = self.p.attack(weapon)
+				monster.attacked(dmg, weapon)
+				self.message = "Attacked " + monster.getType() + " for " + str(dmg) + " damage!"
+				self.printMessage()
+				monster.getHealth()
+			self.p.updateWeapons(weapon)
+			for person in self.currHouse.getPeople():
+				self.p.attacked(person.attack())
+
+		self.look()
+
+	def look(self):
+		self.message = ""
+		self.message += "You are in a house with: \n"
+		if len(self.currHouse.getMonsters()) == 0:
+			self.message += "No monsters\n"
+		else:
+			for m in self.currHouse.getMonsters():
+				self.message += m.getType() + "\n"
+		if len(self.currHouse.getPeople()) == 0:
+			self.message += "and no people."
+		else:
+			self.message += "and " + str(len(self.currHouse.getPeople())) + " people.\n"
+		self.printMessage()
+
 
 	def help(self):
+		"""
+		Prints a list of available commands to the player.
+		"""
 		temp = self.message
 		self.message = "Here's a list of commands: \n"
 		for s in self.commands:

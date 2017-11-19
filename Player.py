@@ -19,12 +19,26 @@ class Player():
 			windex = random.randint(0,2)
 			self.weapons.append(possibleWeapons[windex])
 
-	def attack(Weapon):
+	def attack(self, Weapon):
 		"""
 		Returns the amount of damage done by the player.
 		Mulitplies base attack by weapon's attack modifier.
 		"""
 		return self.attVal * Weapon.getAttMod()
+
+	def updateWeapons(self, weapon):
+		"""
+		Removes weapon if useCount reaches 0.
+		"""
+		weapon.use()
+		if weapon.getUseCount() == 0:
+			self.weapons.remove(weapon)
+
+	def attacked(self, dmg):
+		"""
+		Decrements HP by amount of damage given.
+		"""
+		self.hp -= dmg
 
 	def getHp(self):
 		"""
