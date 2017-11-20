@@ -29,7 +29,7 @@ class Monster(Observable):
 		returns monster's Health and checks if ded
 		"""
 		if self.health <= 0:
-			super().update_observer()
+			super().update_observer(self)
 			self.health = 0
 		return self.health
 
@@ -41,15 +41,15 @@ class Person(Monster):
 	Gives player health through the power of freindship.
 	"""
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, House):
+		super().__init__(House)
 		self.type = "Person"
 		self.health = 100
 
 	def attack(self):
 		return -3
 
-	def attacked(self):
+	def attacked(self, dmg, weapon):
 		return
 
 class Zombie(Monster):
@@ -88,9 +88,10 @@ class Vampire(Monster):
 
 	def attacked(self, dmg, weapon):
 		if weapon.getType() == "Chocolate Bar":
-			pass
+			self.getHealth()
+			return
 		else:
-			self.health -= dmg
+			self.health = self.health - dmg
 		self.getHealth()
 
 
@@ -116,7 +117,7 @@ class Ghoul(Monster):
 
 class Werewolf(Monster):
 	"""
-	Health of 200.  Attacks between 10 and 20.
+	Health of 60.  Attacks between 10 and 20.
 	"""
 
 	def __init__(self, House):
@@ -129,7 +130,7 @@ class Werewolf(Monster):
 
 	def attacked(self, dmg, weapon):
 		if weapon.getType() == "Chocolate Bar" or weapon.getType() == "Sour Straw":
-			self.getHealth
+			self.getHealth()
 		else:
 			self.health -= dmg
 		self.getHealth()

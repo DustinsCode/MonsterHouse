@@ -24,10 +24,9 @@ class Game(Observer):
 		self.x = 1
 		self.y = 1
 		self.currHouse = self.hood.houseArray[self.x][self.y]
-		self.currHouse.playerMove()
 		self.p = Player()
 		self.win = False
-		self.commands = ["exit", "attack <weapon>", "move <north, easy, south, or west>", "inventory", "help", "look"]
+		self.commands = ["exit", "attack <weapon>", "move <north, easy, south, or west>", "inventory", "help", "look", "health"]
 
 
 	def main(self):
@@ -41,7 +40,6 @@ class Game(Observer):
 		self.printMessage()
 		self.look()
 
-
 		while(self.win == False):
 			command = ''
 			while(command == ''):
@@ -50,6 +48,12 @@ class Game(Observer):
 				command = command.lower()
 			if self.parseCommand(command) == "exit":
 				return
+
+		if self.win == True:
+			self.message = "Congratulations! You have successfully save your friends and the day!"
+			self.printMessage()
+
+		return
 
 
 	def printMessage(self):
@@ -73,11 +77,59 @@ class Game(Observer):
 			self.look()
 		elif("attack" in command):
 			self.attack(command)
+		elif("move" in command):
+			self.move(command)
+		elif(command == "health"):
+			self.getHealth()
 		else:
 			self.message = "That is not a command."
 			self.printMessage()
 
+	def move(self, command):
+		"""
+		Moves to the next house in the given direction
+		"""
+		cmdList = command.split(' ')
+		if len(cmdList) != 2:
+			self.message = "Please provide a direction"
+		else:
+			direction = cmdList[1].lower()
+			if direction == "north":
+				self.y -= 1
+				self.message = "Moved North."
+				if self.y < 0:
+					self.y += 1
+					self.message = "There is nothing to the north."
+			elif direction == "south":
+				self.y += 1
+				self.message = "Moved South."
+				if self.y > 2:
+					self.y-=1
+					self.message = "There is nothing to the south"
+			elif direction == "east":
+				self.x += 1
+				self.message = "Moved East."
+				if self.x > 2:
+					self.x -= 1
+					self.message = "There is nothing to the east."
+			elif direction == "west":
+				self.x -= 1
+				self.message = "Moved West."
+				if self.x < 0:
+					self.x += 1
+					self.message = "There is nothing to the west."
+			else:
+				self.message = "That is not a valid direction."
+
+			self.message += "\n"
+			self.printMessage()
+			self.currHouse = self.hood.houseArray[self.x][self.y]
+			self.look()
+
 	def attack(self, command):
+		"""
+		Attacks monsters in the house.
+		"""
 		cmdList = command.split(' ')
 		if len(cmdList) > 3:
 			self.message = "You must attack with one weapon at a time."
@@ -86,33 +138,63 @@ class Game(Observer):
 			weapon = ''
 			for x in cmdList[1:]:
 				#Finds the weapon to be used
-				weapon += x.lower()
+				weapon += str(x.lower()) + " "
+			weapon = weapon.strip()
 			for y in self.p.getWeapons():
-				if(weapon in y.getType().lower().strip()):
+				if(weapon in y.getType().lower()):
+					isWeapon = True
 					weapon = y
 					break
-				weapon = ''
-
-			if weapon == '':
+				isWeapon = False
+			if isWeapon == False:
 				#if the weapon entered was invalid
 				self.message = "That is not a weapon you possess."
 				self.printMessage()
 				return
-
+			dmg = 0
 			for monster in self.currHouse.getMonsters():
 				#Attacks each monster in the house
 				dmg = self.p.attack(weapon)
 				monster.attacked(dmg, weapon)
-				self.message = "Attacked " + monster.getType() + " for " + str(dmg) + " damage!"
-				self.printMessage()
 				monster.getHealth()
+
+			self.message = "Attacked for " + str(int(dmg)) + " damage!"
+			self.printMessage()
 			self.p.updateWeapons(weapon)
+			extraHP = 0
+			totalExtraHp = 0
 			for person in self.currHouse.getPeople():
-				self.p.attacked(person.attack())
+				#People give the player HP
+				extraHP = person.attack()
+				totalExtraHp += extraHP
+				self.p.attacked(extraHP)
+			totalExtraHp *= -1
+			if totalExtraHp != 0:
+				self.message = "Your friends gave you " + str(totalExtraHp) + " health!"
+				self.printMessage()
+			pDmg = 0
+			for monster in self.currHouse.getMonsters():
+				#The monsters attack the player
+				pDmg = monster.attack()
+				self.p.attacked(pDmg)
+			if(pDmg > 0):
+				self.message = "Took damage from the monsters!"
+				self.printMessage()
+			self.getHealth()
 
 		self.look()
 
+	def getHealth(self):
+		"""
+		Tells the user their current health!
+		"""
+		self.message = "Your current health is: " + str(self.p.getHp())
+		self.printMessage()
+
 	def look(self):
+		"""
+		Prints what is in the current house.
+		"""
 		self.message = ""
 		self.message += "You are in a house with: \n"
 		if len(self.currHouse.getMonsters()) == 0:
@@ -121,7 +203,7 @@ class Game(Observer):
 			for m in self.currHouse.getMonsters():
 				self.message += m.getType() + "\n"
 		if len(self.currHouse.getPeople()) == 0:
-			self.message += "and no people."
+			self.message += "and no people.\n"
 		else:
 			self.message += "and " + str(len(self.currHouse.getPeople())) + " people.\n"
 		self.printMessage()
@@ -150,7 +232,6 @@ class Game(Observer):
 
 		for w in weapons:
 			wtype = w.getType()
-			#print(wtype)
 			if wtype == 'Nerd Bomb':
 				nerdCount += 1
 			elif wtype == 'Chocolate Bar':

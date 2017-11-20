@@ -13,26 +13,29 @@ class House(Observer, Observable):
 		self.population = random.randint(0,6)
 		self.monsters = []
 		self.people = []
-		self.containsPlayer = False
 		for i in range(self.population):
 			monsterList = [Zombie(self), Werewolf(self), Vampire(self), Ghoul(self)]
 			monsterIndex = random.randint(0,len(monsterList)-1)
 			self.monsters.append(monsterList[monsterIndex])
-
+	'''
 	def playerMove(self):
+		"""
+		Moves the player to the house
+		"""
 		if self.containsPlayer:
 			self.containsPlayer = False
 		else:
 			self.containsPlayer = True
-
+	'''
 
 	def update(self, *args):
 		"""
 		updates the observer and is updated by monsters
 		"""
 		for monster in args:
-			self.monsters.remove(monster)
-			self.people.append(Person())
+			if monster in self.monsters:
+				self.monsters.remove(monster)
+				self.people.append(Person(self))
 		super().update_observer()
 
 	def getMonsters(self):
