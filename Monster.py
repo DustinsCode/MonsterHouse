@@ -3,7 +3,6 @@ from House import *
 from Weapon import *
 import random
 
-
 class Monster(Observable):
 	"""
 	Monsters that have infested the world.
@@ -32,8 +31,6 @@ class Monster(Observable):
 			super().update_observer(self)
 			self.health = 0
 		return self.health
-
-
 
 class Person(Monster):
 	"""

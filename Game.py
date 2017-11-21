@@ -24,8 +24,9 @@ class Game(Observer):
 		self.x = 1
 		self.y = 1
 		self.currHouse = self.hood.houseArray[self.x][self.y]
-		self.p = Player()
+		self.p = Player(self)
 		self.win = False
+		self.lose = False
 		self.commands = ["exit", "attack <weapon>", "move <north, easy, south, or west>", "inventory", "help", "look", "health"]
 
 
@@ -40,7 +41,7 @@ class Game(Observer):
 		self.printMessage()
 		self.look()
 
-		while(self.win == False):
+		while(self.win == False and self.lose == False):
 			command = ''
 			while(command == ''):
 				command = input('> ')
@@ -52,8 +53,33 @@ class Game(Observer):
 		if self.win == True:
 			self.message = "Congratulations! You have successfully save your friends and the day!"
 			self.printMessage()
+		elif self.lose == True:
+			self.message = "You have died.  You let everyone down.  We hope you feel good about yourself."
+			self.printMessage()
+		else:
+			self.message = "Goodbye, friend! Take your time on saving us, it's okay.  Come back when you're ready."
+			self.printMessage()
 
 		return
+
+	def update(self):
+		"""
+		Update from the observable.
+		"""
+		self.lose = True
+
+
+	def checkWin(self):
+		"""
+		Checks to see if win conditions met.
+		"""
+		emptyCount = 0
+		for street in self.hood.getHouseArray():
+			for house in street:
+				if len(house.getMonsters()) == 0:
+					emptyCount += 1
+		if emptyCount == 9:
+			self.win = True
 
 
 	def printMessage(self):
@@ -125,6 +151,7 @@ class Game(Observer):
 			self.printMessage()
 			self.currHouse = self.hood.houseArray[self.x][self.y]
 			self.look()
+			self.checkWin()
 
 	def attack(self, command):
 		"""
@@ -177,11 +204,14 @@ class Game(Observer):
 				#The monsters attack the player
 				pDmg = monster.attack()
 				self.p.attacked(pDmg)
+				if(self.p.getHp() <= 0):
+					return;
 			if(pDmg > 0):
 				self.message = "Took damage from the monsters!"
 				self.printMessage()
 			self.getHealth()
 
+		self.checkWin()
 		self.look()
 
 	def getHealth(self):

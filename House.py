@@ -36,7 +36,7 @@ class House(Observer, Observable):
 			if monster in self.monsters:
 				self.monsters.remove(monster)
 				self.people.append(Person(self))
-		super().update_observer()
+		#super().update_observer()
 
 	def getMonsters(self):
 		"""
