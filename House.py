@@ -1,24 +1,50 @@
 from Monster import *
-from Oberver import Observer
+from Observer import *
 from Observable import Observable
 
+class House(Observer, Observable):
+	"""
+	A house object.  Populates with 0-6 monsters
+	"""
+	def __init__(self, game):
+		super().__init__()
+		super().register(game)
+		self.population = random.randint(0,6)
+		self.monsters = []
+		self.people = []
+		for i in range(self.population):
+			monsterList = [Zombie(self), Werewolf(self), Vampire(self), Ghoul(self)]
+			monsterIndex = random.randint(0,len(monsterList)-1)
+			self.monsters.append(monsterList[monsterIndex])
+	'''
+	def playerMove(self):
+		"""
+		Moves the player to the house
+		"""
+		if self.containsPlayer:
+			self.containsPlayer = False
+		else:
+			self.containsPlayer = True
+	'''
 
-class House(Observer, Obervable):
-"""
-A house object
-"""
-    def __init__(self, monsters, game):
-        super().register(game)
-        self.population = random.randint(0,10)
-        self.monsters = []
-        self.people = []
-        for i in range(self.population):
-            monsterIndex = random.randint(0,len(monsters)-1)
-            personChance = random.randint(1,10)
-            self.monsters.append(monsters[monsterIndex])
+	def update(self, *args):
+		"""
+		updates the observer and is updated by monsters
+		"""
+		for monster in args:
+			if monster in self.monsters:
+				self.monsters.remove(monster)
+				self.people.append(Person(self))
+		#super().update_observer()
 
-    def update(self, *args):
-        for monster in args:
-            self.monsters.remove(monster)
-            self.people.append(Person())
-        update_observer(len(args))
+	def getMonsters(self):
+		"""
+		Returns list of monsters in the house.
+		"""
+		return self.monsters
+
+	def getPeople(self):
+		"""
+		Returns list of Person objects in the house.
+		"""
+		return self.people
