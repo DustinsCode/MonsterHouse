@@ -44,6 +44,9 @@ class Person(Monster):
 		self.health = 100
 
 	def attack(self):
+		"""
+		Gives the player 3 health.
+		"""
 		return -3
 
 	def attacked(self, dmg, weapon):

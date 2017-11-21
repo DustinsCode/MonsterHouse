@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-#from Monster import *
-#from House import *
 from Weapon import *
 from Player import Player
 from Neighborhood import Neighborhood

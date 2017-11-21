@@ -2,7 +2,6 @@ from Monster import *
 from Observer import *
 from Observable import Observable
 
-
 class House(Observer, Observable):
 	"""
 	A house object.  Populates with 0-6 monsters
